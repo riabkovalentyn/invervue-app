@@ -22,24 +22,24 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue-class-component';
-import {useInverstmentForm} from '../store/investmentFormStore';
-import {submitForm} from '../api/formapi';
+import {defineComponent, toRefs} from 'vue-class-component';
+import {InvestmentForm} from '../store/investmentFormStore';
+import {useStore} from 'vuex'; 
 
 export default defineComponent({
     setup() {
-        const {form } = useInverstmentForm();
+        const store = useStore();
+        const form = store.state.form as InvestmentForm;
 
-        const submitForm = async () => {
-            try {
-                await submitForm(form);
-                alert('Formular byl odeslán');
-            } catch (error) {
-                console.error('Chyba při odesílání formuláře:', error);
-            }
+        const nextStep = () => {
+            store.commit('nextStep');
         };
-        
-        return { form, submitForm };
-    }
-});       
+
+        return {
+            ...toRefs(form),
+            nextStep,
+        };
+    },
+});
 </script>
+

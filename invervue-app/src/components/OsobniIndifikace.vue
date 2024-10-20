@@ -18,13 +18,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { useInverstmentForm } from '@/composation/useInverstmentForm';
+import { defineComponent, toRefs } from 'vue';
+import { InvestmentForm } from '@/composation/useInverstmentForm';
+import { useStore } from 'vuex';
 
 export default defineComponent({
     setup() {
-        const { form, nextStep } = useInverstmentForm();
-        return { form, nextStep };
-    }
+        const store = useStore();
+        const { form } = store.state.form as InvestmentForm;
+
+        const nextStep = () => {
+            store.commit('nextStep');
+        };
+
+        return {
+            ...toRefs(form),
+            nextStep
+        };
+    },
 });
 </script>

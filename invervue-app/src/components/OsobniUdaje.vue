@@ -9,3 +9,25 @@
 
     </div>
 </template>
+
+<script>
+import { defineComponent, toRefs } from 'vue';
+import { InvestmentForm } from '../types';
+import { useStore } from 'vuex';
+
+export default defineComponent({ 
+    setup() {
+        const store = useStore();
+        const form = store.state.form as InvestmentForm;
+
+        const nextStep = () => {
+            store.commit('nextStep');
+        };
+
+        return{
+            ...toRefs(form),
+            nextStep,
+        };
+    },
+});
+</script>
