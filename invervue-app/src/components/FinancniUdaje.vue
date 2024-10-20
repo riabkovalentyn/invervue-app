@@ -8,7 +8,7 @@
     </div>
     <div>
         <label>Cislo Bankovniho uctu</label>
-        <input v-model="form.bankAccaunt" placeholder="Cislo bankovniho uctu" required />
+        <input v-model="form.bankAccount" placeholder="Cislo bankovniho uctu" required />
     </div>
     <div>
         <label> 

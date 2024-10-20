@@ -1,32 +1,32 @@
-import { reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed } from 'vue';
 
 export function useInvestmentForm() {
-    const router = useRouter();
+  const name = ref('');
+  const email = ref('');
+  const phone = ref('');
+  const investmentAmount = ref(0);
+  
+  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  
+  const isFieldValid = (field: string) => field.trim() !== '';
+  
+  const isValidInvestmentAmount = (amount: number) => amount > 0;
 
+  const isFormValid = computed(() => 
+    isFieldValid(name.value) && 
+    isValidEmail(email.value) && 
+    isFieldValid(phone.value) && 
+    isValidInvestmentAmount(investmentAmount.value)
+  );
 
-
-    const investmentForm = reactive({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        personalID: '',
-        birthDate: '',
-        idNumber: '',
-        adress: '',
-        bankAccount: '',
-        amount: 0,
-        termsAndConditions: false
-    });
-
-    const nextStep = () => {
-        if (validateForm()) {
-            router.push('/next-step');
-        
-    };
-    
-    const validateForm = () => {
-        if(!)
-    };
+  return {
+    name,
+    email,
+    phone,
+    investmentAmount,
+    isFormValid,
+    isValidEmail,
+    isFieldValid,
+    isValidInvestmentAmount,
+  };
 }
